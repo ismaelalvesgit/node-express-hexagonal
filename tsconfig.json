@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "baseUrl": "src",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@controller/*": ["interface/http/controller/*"],
+      "@middleware/*": ["interface/http/middleware/*"],
+      "@amqp/*": ["interface/amqp/*"],
+      "@util/*": ["util/*"],
+      "@repository/*": ["infrastructure/repository/*"],
+      "@adapter/*": ["infrastructure/adapter/*"],
+      "@command/*": ["commands/*"],
+      "@type/*": ["types/*"]
+    }
+  },
+  "exclude": [
+    "conftest.ts",
+    "*.config.ts",
+    "src/**/*.mock.*",
+    "src/**/*.test.*"
+  ]
+}

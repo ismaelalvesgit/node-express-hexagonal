@@ -1,0 +1,4 @@
+src/public/*
+jest.config.js
+*.d.ts
+src/types/*
