@@ -1,0 +1,27 @@
+{
+    "title": [
+      {
+        "pattern": "^(([A-Z]+)-[1-9]\\d{0,5}:\\s\\S+|^(develop to staging|staging to develop|staging to master|master to staging|deploy \\d{4}-\\d{2}-\\d{2})$)(\\s|\\S)*",
+        "message": "Your title needs to be prefixed with a JIRA ticket"
+      }
+    ],
+    "body": [
+      {
+        "pattern": "(\\s|\\S)*(([A-Z]+)-[1-9]\\d{0,5}|(develop to staging|staging to develop|staging to master|master to staging|deploy \\d{4}-\\d{2}-\\d{2}))(\\s|\\S)*",
+        "flags": ["i"],
+        "message": "You need a JIRA ticket in your description, or to specify if it's a merge between environments branch"
+      },
+      {
+        "pattern": ".{1,}",
+        "message": "You need to specify something in the PR description"
+      }
+    ],
+    "head.ref": [
+      {
+        "pattern": "^(develop|staging|master)$|^((build|ci|docs|feat|hotfix|fix|perf|refact|style)/([A-Z]+)-[1-9]\\d{0,5}/)\\S+",
+        "flags": ["i"],
+        "message": "Your branch name is invalid"
+      }
+    ]
+  }
+  
