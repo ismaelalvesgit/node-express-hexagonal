@@ -25,6 +25,6 @@ export function getAgent(): typeof apm {
 
 export function setApmTransactionResult(transaction: apm.Transaction | null, result: string | number){
   if(transaction){
-    transaction.result = result
+    transaction.result = result;
   }
 }
