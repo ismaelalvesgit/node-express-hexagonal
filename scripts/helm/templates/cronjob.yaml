@@ -49,9 +49,8 @@ spec:
                 {{- end }}
                 {{- end }}
               command:
-                - npx
-                - babel-node
-                - cron
+                - node
+                - src/command.js
                 - {{ .command }}
 ---
 {{- end }}
