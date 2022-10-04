@@ -7,7 +7,7 @@ metadata:
   namespace: {{ or .Values.namespace .Release.Namespace }}
   {{- end}}
   annotations:
-  {{ include "service.annotations" . | nindent 4 }}
+  {{ include "service.annotations" . | indent 3 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: 100
@@ -24,6 +24,28 @@ spec:
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: migrations
+        env:
+          {{- range $key, $value := .Values.env }}
+          {{- if $value }}
+          - name: {{ $key | upper }}
+            value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- range $key, $value := .Values.secret }}
+          {{- if $value }}
+          - name: {{ $key | upper }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "service.fullname" $ }}
+                key: {{ $key | upper }}
+          {{- end }}
+          {{- end }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: ["-c", "npm run migrate:up"]
       containers:
       - name: {{ include "service.name" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -44,12 +66,14 @@ spec:
                 key: {{ $key | upper }}
           {{- end }}
           {{- end }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.env.SERVER_PORT }}
+            protocol: TCP
         livenessProbe:
-          exec:
-            command:
-              - npx
-              - babel-node
-              - healthcheck
+          httpGet:
+            path: {{ .Values.image.livenessPath }}
+            port: {{ .Values.env.SERVER_PORT }}
           initialDelaySeconds: 35
           timeoutSeconds: 60
           failureThreshold: 6
