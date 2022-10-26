@@ -9,14 +9,20 @@ export interface Contact {
 export interface IContactRepository {
   find(): Promise<Array<Contact>>;
   create(contact: Contact): Promise<void>;
+  update(contact: Contact): Promise<void>;
+  delete(contact: Contact): Promise<void>;
 }
 
 export interface IContactService {
   find(): Promise<Array<Contact>>;
   create(contact: Contact): Promise<void>;
+  update(contact: Contact): Promise<void>;
+  delete(contact: Contact): Promise<void>;
 }
 
 export interface IContactUseCase {
   find(): Promise<Array<Contact>>;
   create(contact: Contact): Promise<void>;
+  update(contact: Contact): Promise<void>;
+  delete(id: number): Promise<void>;
 }

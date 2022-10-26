@@ -1,8 +1,18 @@
 import { MysqlAdapter } from "@adapter/mysql";
 import { ContactRepository } from "../contact";
 import { MysqlDatabase } from "@type/infrastructure";
+import { Contact } from "@type/contact";
+import { contactMock } from "./__mocks__/contactRepository.mock";
 
-describe("Example Repository", () => {
+describe("Contact Repository", () => {
+  const mysqlAdapter = new MysqlAdapter();
+  const contactRepository = new ContactRepository({
+    mysqlAdapter,
+  });
+
+  beforeAll(async()=>{
+    await contactRepository.create(contactMock);
+  });
 
   describe("#constructor", () => {
     it("constructs with all properties", () => {
@@ -21,34 +31,38 @@ describe("Example Repository", () => {
     });
   });
 
-  describe("#find", () => {
-    it("find a wallet", async () => {
-      const db = {
-        options: jest.fn().mockReturnThis(),
-        innerJoin: jest.fn().mockReturnThis(),
-        select: jest.fn().mockReturnThis(),
-        where: jest.fn().mockReturnThis(),
-        then: jest.fn((done) => {
-          done([
-            {
-              bankAccountId: 1,
-            },
-          ]);
-        }),
-      };
-      const dbConn = (jest.fn(() => {
-        return db;
-      }) as unknown) as MysqlDatabase;
-      const mysqlAdapter = new MysqlAdapter({ dbConn });
-      const u = new ContactRepository({
-        mysqlAdapter,
-      });
+  describe("create", () => {
+    it("should create new contact", async () => {
+      await expect(contactRepository.create({
+        name: new Date().toISOString(),
+        phone: "13456"
+      } as Contact)).resolves.not.toThrow();
+    });
+  });
 
-      const [wallet] = await u.find();
-      
-      expect(wallet).toEqual({
-        bankAccountId: 1,
-      });
+  describe("update", () => {
+    it("should update contact", async () => {
+      const [contact] = await contactRepository.find();
+      await expect(contactRepository.update({
+        ...contactMock,
+        id: contact.id
+      })).resolves.not.toThrow();
+    });
+  });
+
+  describe("delete", () => {
+    it("should delete by id", async () => {
+      const [contact] = await contactRepository.find();
+      await expect(contactRepository.update({
+        id: contact.id
+      } as Contact)).resolves.not.toThrow();
+    });
+  });
+
+  describe("find", () => {
+    it("should find contacts", async () => {
+      const [result] = await contactRepository.find();
+      expect(result.name).toStrictEqual(contactMock.name);
     });
   });
   

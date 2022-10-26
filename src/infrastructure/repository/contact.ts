@@ -28,4 +28,16 @@ export class ContactRepository implements IContactRepository {
     this.socket?.emit("/contact", contact);
   }
 
+  public async update(contact: Contact): Promise<void> {
+    await this.mysqlAdapter.db
+    .where({id: contact.id})
+    .update(contact);
+  }
+
+  public async delete(contact: Contact): Promise<void> {
+    await this.mysqlAdapter.db
+    .where({id: contact.id})
+    .del();
+  }
+
 }
