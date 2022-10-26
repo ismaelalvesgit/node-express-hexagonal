@@ -1,16 +1,19 @@
 /* eslint-disable max-classes-per-file */
 class CustomError extends Error {
   private code: string;
-  private details: CustomError[] | null;
+  public i18n?: string;
+  public details: CustomError[] | null | undefined;
 
   constructor(
     code: string,
     message: string | null = null,
     details: CustomError[] | null = null,
+    i18n?: string,
   ) {
     super(message || code);
     this.code = code;
     this.details = details;
+    this.i18n = i18n;
     Error.captureStackTrace(this, this.constructor);
   }
 }
@@ -21,27 +24,27 @@ export class InvalidProperties extends CustomError {
   }
 }
 
-export class InternalServerError extends CustomError {
+export class InternalServer extends CustomError {
   constructor(message: string, details: null | any[] = null) {
     super("INTERNAL_SERVER_ERROR", message, details);
   }
 }
 
-export class BadRequestError extends CustomError {
+export class BadRequest extends CustomError {
   constructor(message: string, details: null | any[] = null) {
     super("BAD_REQUEST", message, details);
   }
 }
 
-export class NotFoundError extends CustomError {
+export class NotFound extends CustomError {
   constructor(message: string, details: null | any[] = null) {
     super("NOT_FOUND_ERROR", message, details);
   }
 }
 
 export class FailedSQL extends CustomError {
-  constructor(msg: string) {
-    super("FAILED_SQL", msg);
+  constructor(msg: string, details: null | any[] = null, i18n?: string) {
+    super("FAILED_SQL", msg, details, i18n);
   }
 }
 
@@ -51,8 +54,14 @@ export class AlreadyExists extends CustomError {
   }
 }
 
-export class OutOfCuttingTimeError extends CustomError {
+export class OutOfCuttingTime extends CustomError {
   constructor(msg: string) {
     super("OUT_OF_CUTTING_TIME", msg);
+  }
+}
+
+export class ServiceUnavailable extends CustomError {
+  constructor(i18n: string) {
+    super("SERVICE_UNAVAILABLE", null, null, i18n);
   }
 }
