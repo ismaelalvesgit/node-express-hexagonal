@@ -26,8 +26,8 @@ export default {
                     callback(err, connection);
                 });
             },
-            min: 1,
-            max: 10
+            min: env.db.pool.min,
+            max: env.db.pool.max
         },
         migrations: {
             tableName: "migrations",
@@ -40,22 +40,10 @@ export default {
         debug: env.db.debug
     },
     test:{
-        client: "mysql2",
-        connection: {
-            host: env.db.host,
-            port: env.db.port,
-            user: env.db.user,
-            password: env.db.password,
-            database: `test_${env.db.database}`,
-            supportBigNumbers: true,
-            bigNumberStrings: true,
-            multipleStatements: true,
-            dateStrings: true,
-        },
-        pool:{
-            min: 1,
-            max: 10
-        },
+        client: "sqlite3",
+        connection: ":memory:",
+        useNullAsDefault: true,
+        pool: env.db.pool,
         migrations: {
             tableName: "migrations",
             directory: `${__dirname}/db/migrations`
