@@ -1,12 +1,22 @@
 import { Knex } from "knex";
 
-const createdAt = (knex: Knex, table: Knex.TableBuilder) => table.timestamp('createdAt', { precision: 3 })
-  .notNullable()
-  .defaultTo(knex.fn.now(3));
+const env = process.env.NODE_ENV
 
-const updatedAt = (knex: Knex, table: Knex.TableBuilder) => table.timestamp('updatedAt', { precision: 3 })
-  .notNullable()
-  .defaultTo(knex.raw('CURRENT_TIMESTAMP(3) on update CURRENT_TIMESTAMP(3)'));
+const createdAt = (knex: Knex, table: Knex.TableBuilder) => {
+  if(env !== 'test'){
+    table.timestamp('createdAt', { precision: 3 })
+    .notNullable()
+    .defaultTo(knex.fn.now(3))
+  }
+};
+
+const updatedAt = (knex: Knex, table: Knex.TableBuilder) => {
+  if(env !== 'test'){
+    table.timestamp('updatedAt', { precision: 3 })
+    .notNullable()
+    .defaultTo(knex.raw('CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)'))
+  }
+};
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('contact', (table)=>{
