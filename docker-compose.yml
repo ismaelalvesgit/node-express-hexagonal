@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+
+  example: 
+    build: .
+    container_name: example
+    restart: always
+    ports:
+      - 3005:3000
+    environment:
+      NODE_ENV: development
+      TZ: America/Fortaleza
+      SERVICE_NAME: example
+      DB_HOST: mysql
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_DATABASE: ${DB_DATABASE}
+      BRASIL_API: https://brasilapi.com.br
+      REDIS_HOST: redis
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql1
+    restart: always
+    command: mysqld --sql_mode="${MYSQL_MODE}"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports: 
+      - 3306:3306
+    volumes:
+      - mysqldrive:/var/lib/mysql
+      - //etc/localtime:/etc/localtime:ro # Windows WSL
+      - //etc/timezone:/etc/timezone:ro # Windows WSL
+    healthcheck:
+      test: "/etc/init.d/mysql status"
+      interval: 1s
+      retries: 120
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - redisdrive:/data/redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+networks:
+  default:
+
+volumes:
+  mysqldrive:

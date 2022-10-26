@@ -1,4 +1,4 @@
-# Build applicasion
+# Build application
 FROM node:14-slim AS build
 WORKDIR /app
 COPY package*.json ./
@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Release applicasion
+# Release application
 FROM node:14.18.0-alpine
 LABEL maintainer="Ismael Alves <cearaismael1997@gmail.com>"
 WORKDIR /app

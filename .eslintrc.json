@@ -22,7 +22,7 @@
         "func-names": "off",
         "no-underscore-dangle": "off",
         "consistent-return": "off",
-        "jest/expect-expect": "off",
+        "jest/no-mocks-import": "off",
         "max-len": [
             "error", 
             {

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "moduleResolution": "node",
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
@@ -23,7 +22,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "resolveJsonModule": true,
     "outDir": "dist",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@core/*": ["core/*"],
       "@controller/*": ["interface/http/controller/*"],
@@ -38,7 +37,6 @@
   },
   "exclude": [
     "conftest.ts",
-    "*.config.ts",
     "src/**/*.mock.*",
     "src/**/*.test.*"
   ]
