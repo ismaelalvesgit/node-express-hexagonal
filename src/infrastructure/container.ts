@@ -1,18 +1,28 @@
 import { MysqlAdapter } from "./adapter/mysql";
 import {
-  ContainerConfig,
-  Container,
+  Env,
 } from "@type/infrastructure";
 import { ContactRepository } from "./repository/contact";
-import { Logger } from "@util/logger";
 import { Server } from "socket.io";
+import { BrasilRepository } from "@repository/brasil";
+import { HttpAdapter } from "@adapter/http";
+import { SystemRepository } from "@repository/system";
+import { RedisAdapter } from "@adapter/redis";
+import { ContainerConfig } from "@type/core";
 
-export function createContainer(config: ContainerConfig, io?: Server): Container {
-  Logger.info(config);
+export function createContainer(config: Env, io?: Server): ContainerConfig {
   return {
     contactRepository: new ContactRepository({
       mysqlAdapter: new MysqlAdapter(),
       socket: io
     }),
+    brasilRepository: new BrasilRepository({
+      config,
+      httpAdapter: HttpAdapter
+    }),
+    systemRepository: new SystemRepository({
+      config,
+      redisAdapter: RedisAdapter
+    })
   };
 }
