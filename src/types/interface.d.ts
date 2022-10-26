@@ -11,7 +11,7 @@ import { Server, Socket } from "socket.io";
 
 declare module 'express-serve-static-core' {
   interface Request {
-    requestId?: string
+    requestId: string
   }
 }
 /* HTTP Interface */
@@ -69,15 +69,10 @@ export type AmqpConsumerConfig = {
   _onConsume: AmqpOnConsumeFunction;
 };
 
-
 export type SocketConsumerConfig = {
   coreContainer: Container;
   socket: Socket
 };
-
-/* CLI Interface */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ICliInterface { }
 
 export interface ICronInterface {
   start(): void;
