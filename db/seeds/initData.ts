@@ -17,6 +17,7 @@ const data = [
     phone: chance.phone()
   }
 ]
+
 export async function seed(knex: Knex) {
   return knex.transaction(async (trx) => {
     await Promise.all(data.map(async(item)=>{

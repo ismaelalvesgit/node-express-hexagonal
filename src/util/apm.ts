@@ -5,7 +5,7 @@ import { env } from "./env";
 let elasticAgent: typeof apm | null = null;
 if (env.apm.serverUrl) {
   elasticAgent = apm.start({
-    serviceName: env.apm.serviceName,
+    serviceName: env.serviceName,
     secretToken: env.apm.secretToken,
     apiKey: env.apm.apiKey,
     serverUrl: env.apm.serverUrl,
@@ -15,7 +15,7 @@ if (env.apm.serverUrl) {
   if (!elasticAgent.isStarted()) {
     Logger.info("Failed to start APM server");
   } else {
-    Logger.info(`Registered service "${env.apm.serviceName}" in APM Server: ${env.apm.serverUrl}`);
+    Logger.info(`Registered service "${env.serviceName}" in APM Server: ${env.apm.serverUrl}`);
   }
 }
 
