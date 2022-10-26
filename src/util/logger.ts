@@ -1,4 +1,4 @@
-import { init } from "@somosphi/logger";
+import { init } from "@ismaelalves/logger";
 import { env } from "./env";
 
 export const {
@@ -6,7 +6,12 @@ export const {
   ExpressLogger,
   Logger,
   Redact,
+  RequestLogger
 } = init({
-  PROJECT_NAME: "contact",
+  PROJECT_NAME: env.serviceName,
   LOG_LEVEL: env.enviorement === "test" ? "fatal" : "debug",
+  OMIT_ROUTES: [
+    "/v1/system/metrics"
+  ]
 });
+
