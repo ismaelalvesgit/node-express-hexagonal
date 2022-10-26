@@ -8,7 +8,8 @@ describe("redis adapter", () => {
   it("constructs with all properties", () => {
     try {
       new RedisAdapter({
-        url: `${chance.url()}:${chance.integer({ min: 0, max: 65536 })}`
+        host: chance.url(),
+        port: chance.integer({ min: 0, max: 65536 })
       });
     } catch (error:any) {
       expect(error).toBeDefined();

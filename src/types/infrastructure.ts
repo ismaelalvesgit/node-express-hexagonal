@@ -1,8 +1,7 @@
 import { Knex } from "knex";
 import { Channel, Options } from "amqplib";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { RedisClientOptions } from "redis";
-import { IContactRepository } from "./contact";
+import { RedisOptions } from "ioredis";
 
 /* Http Adapter */
 export interface IHttpAdapterConstructs {
@@ -55,21 +54,64 @@ export interface IMessageBusAdapter {
 }
 
 export interface IRedisAdapterConstructs {
-  new(config?: RedisClientOptions): IRedisAdapter;
+  new(config?: RedisOptions): IRedisAdapter;
 }
 
 export interface IRedisAdapter {
   get(key: string): Promise<string | null>;
   set(key: string, value: string, exp?: number): void;
   expire(key: string, seconds: number): void;
-  delete(key: string): void;
+  delete(key: string): Promise<number>;
+  deleteByPrefix(key: string): Promise<number[]>;
 }
 
-/* Infrastructure */
-export type Container = {
-  contactRepository: IContactRepository;
-};
-
-export type ContainerConfig = {
-
+export type Env = {
+  enviorement: string
+  isProd: boolean
+  timezone: string
+  serviceName: string
+  server: {
+    url: string
+    port: number
+    bodyLimit: string
+  }
+  brasilApi?: string
+  db: {
+    host?: string
+    port: number
+    user?: string
+    password?: string
+    database?: string
+    debug: boolean
+    pool: {
+      min: number
+      max: number
+    }
+  }
+  redis: {
+    host?: string
+    port: number
+    db: number
+    prefix: string
+  }
+  apm: {
+    serverUrl?: string
+    apiKey?: string
+    secretToken?: string
+    cloudProvider: string
+  }
+  amqp: {
+    active: boolean
+    protocol?: string
+    host?: string
+    port: number
+    user?: string
+    password?: string
+    vhost?: string
+  }
+  vault: {
+    host?: string
+    roleId?: string
+    secretId?: string
+  }
 };
