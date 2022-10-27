@@ -96,7 +96,7 @@ segurança em suas credencias.
 Deixei configurado um Dockerfile ja pronto para realizar o build do projeto. tambem deixei um docker-security pra realizar testes de segurança 
 no script de build do dockerfile com a ferramenta [conftest](https://github.com/open-policy-agent/conftest).
 
-```sh`
+```sh
 npm run conftest
 ```
 
