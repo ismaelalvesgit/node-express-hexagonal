@@ -1,4 +1,4 @@
-# API hegagonal em node.js
+# API hexagoral em node.js
 Este projeto foi criado por motivos acadêmicos mostrando um pouco o que aprendi estudando a arquitetura [hexagoral](https://medium.com/tableless/desvendando-a-arquitetura-hexagonal-52c56f8824c)
 
 ## Development
@@ -88,14 +88,23 @@ Acho um ponto muito importante os desenvolvedores se atentarem a possiveis vulne
 - [x-xss-protection](https://www.npmjs.com/package/x-xss-protection)
 - [helmet](https://helmetjs.github.io/)
 
-Outro ponto tambem que deixei pre-configurado gerenciadores de credencias como [vault](https://www.vaultproject.io/) que dará up de
+Tambem que deixei pre-configurado gerenciadores de credencias como [vault](https://www.vaultproject.io/) que dará up de
 segurança em suas credencias.
 
-#### 9) Helm
+
+#### 9) Docker
+Deixei configurado um Dockerfile ja pronto para realizar o build do projeto. tambem deixei um docker-security pra realizar testes de segurança 
+no script de build do dockerfile com a ferramenta [conftest](https://github.com/open-policy-agent/conftest).
+
+```sh`
+npm run conftest
+```
+
+#### 10) Helm
 Deixei configurado o [helm](https://helm.sh/) para que sejá possivel trabalhar com [kubernetes](https://kubernetes.io/pt-br/).
 os respectivos arquivos estão localizados em `./scripts/helm/**`
 
-#### 10) Documentação
+#### 11) Documentação
 O projeto possui uma documentação das rotas da API basta navegar para [url](http://localhost:3000/v1/api-doc/).
 
 ## Contato

@@ -21,7 +21,7 @@
     "migrate:create": "knex migrate:make --env local $MIGRATE_NAME",
     "migrate:down": "knex migrate:down --env local",
     "migrate:up": "knex migrate:latest --env local",
-    "conftest": "ts-node-dev conftest.js",
+    "conftest": "ts-node-dev conftest.ts",
     "cli": "ts-node-dev -r tsconfig-paths/register ./src/command.ts"
   },
   "keywords": [],
