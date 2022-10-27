@@ -121,7 +121,7 @@ export class HttpInterface implements IHttpInterface {
 
 
   setupDoc(){
-    this.app?.use("/api-doc", swagger.serve, swagger.setup(swaggerDocument));
+    this.app?.use("/v1/api-doc", swagger.serve, swagger.setup(swaggerDocument));
   }
 
   setupAssets(){  
