@@ -1,5 +1,5 @@
-# API hexagoral em node.js
-Este projeto foi criado por motivos acadêmicos mostrando um pouco o que aprendi estudando a arquitetura [hexagoral](https://medium.com/tableless/desvendando-a-arquitetura-hexagonal-52c56f8824c)
+# API hexagonal em node.js
+Este projeto foi criado por motivos acadêmicos mostrando um pouco o que aprendi estudando a arquitetura [hexagonal](https://medium.com/tableless/desvendando-a-arquitetura-hexagonal-52c56f8824c)
 
 ## Development
 
