@@ -1,10 +1,9 @@
 /* eslint-disable jest/no-conditional-expect */
 import { Chance } from "chance";
 import { RedisAdapter } from "../redis";
-import redis from "redis";
+
 const chance = new Chance();
 describe("redis adapter", () => {
-  beforeAll(()=> jest.mock("redis", () => redis));
   it("constructs with all properties", () => {
     try {
       new RedisAdapter({
@@ -19,4 +18,3 @@ describe("redis adapter", () => {
     }
   });
 });
-/* eslint-enable jest/no-conditional-expect */

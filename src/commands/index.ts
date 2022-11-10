@@ -9,7 +9,7 @@ import {
 } from "../infrastructure/container";
 import { env } from "@util/env";
 
-const infraContainer = createInfraContainer(env);
+const infraContainer = createInfraContainer(env.get());
 const coreContainer = createCoreContainer(infraContainer);
 const commands = [] as Array<AddCommands>;
 

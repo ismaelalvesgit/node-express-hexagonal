@@ -11,12 +11,12 @@ import { env } from "./env";
 // TODO handle channel close
 // TODO handle reconnection
 const config: Options.Connect = {
-  protocol: env.amqp.protocol,
-  hostname: env.amqp.host,
-  port: env.amqp.port,
-  username: env.amqp.user,
-  password: env.amqp.password,
-  vhost: env.amqp.vhost,
+  protocol: env.get().amqp.protocol,
+  hostname: env.get().amqp.host,
+  port: env.get().amqp.port,
+  username: env.get().amqp.user,
+  password: env.get().amqp.password,
+  vhost: env.get().amqp.vhost,
 };
 
 let connection: Connection;

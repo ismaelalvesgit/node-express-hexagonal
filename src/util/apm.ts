@@ -3,19 +3,19 @@ import { Logger } from "./logger";
 import { env } from "./env";
 
 let elasticAgent: typeof apm | null = null;
-if (env.apm.serverUrl) {
+if (env.get().apm.serverUrl) {
   elasticAgent = apm.start({
-    serviceName: env.serviceName,
-    secretToken: env.apm.secretToken,
-    apiKey: env.apm.apiKey,
-    serverUrl: env.apm.serverUrl,
-    cloudProvider: env.apm.cloudProvider
+    serviceName: env.get().serviceName,
+    secretToken: env.get().apm.secretToken,
+    apiKey: env.get().apm.apiKey,
+    serverUrl: env.get().apm.serverUrl,
+    cloudProvider: env.get().apm.cloudProvider
   });
 
   if (!elasticAgent.isStarted()) {
     Logger.info("Failed to start APM server");
   } else {
-    Logger.info(`Registered service "${env.serviceName}" in APM Server: ${env.apm.serverUrl}`);
+    Logger.info(`Registered service "${env.get().serviceName}" in APM Server: ${env.get().apm.serverUrl}`);
   }
 }
 

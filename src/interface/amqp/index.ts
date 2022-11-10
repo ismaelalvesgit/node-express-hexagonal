@@ -8,9 +8,10 @@ import {
 } from "@type/interface";
 import { ContactConsumer } from "./consumer/contact";
 import { onConsume } from "./middlewares/onConsume";
+import { Env } from "@type/infrastructure";
 
 type Config = {
-  env: typeof import("@util/env").env;
+  env: Env;
   coreContainer: Container;
 };
 

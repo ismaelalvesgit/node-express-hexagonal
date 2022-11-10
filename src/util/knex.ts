@@ -3,7 +3,7 @@ import { env } from "./env";
 import knexfile from "../../knexfile";
 
 let knexConn: Knex.Config;
-switch (env.enviorement) {
+switch (env.get().enviorement) {
   case "development":
     knexConn = knexfile.local;
     break;

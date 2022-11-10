@@ -5,9 +5,10 @@ import { CronJob } from "cron";
 import { v4 } from "uuid";
 import { getAgent, setApmTransactionResult } from "@util/apm";
 import commands from "@command/index";
+import { Env } from "@type/infrastructure";
 
 type Config = {
-    env: typeof import("@util/env").env;
+    env: Env;
     coreContainer: Container;
 };
   

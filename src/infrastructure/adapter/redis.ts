@@ -33,9 +33,9 @@ export class RedisAdapter implements IRedisAdapter {
   }
 
   async deleteByPrefix(prefix: string){
-    const keys = await this.client.keys.bind(this.client)(`${env.redis.prefix}${prefix}:*`);
+    const keys = await this.client.keys.bind(this.client)(`${env.get().redis.prefix}${prefix}:*`);
     return Promise.all(keys.map((key)=>{
-      return this.delete(key.split(env.redis.prefix)[1]);
+      return this.delete(key.split(env.get().redis.prefix)[1]);
     }));
   } 
 }

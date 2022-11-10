@@ -20,10 +20,11 @@ import changeLocaleHandler from "@middleware/changeLocale";
 import i18n from "@middleware/i18n";
 import { HttpRouter } from "@controller/routes";
 import { ServiceUnavailable } from "@util/error";
+import { Env } from "@type/infrastructure";
 const swaggerDocument = YAML.load("./doc/swagger.yml");
 
 type Config = {
-  env: typeof import("@util/env").env;
+  env: Env;
   coreContainer: Container;
   io: Server
 };

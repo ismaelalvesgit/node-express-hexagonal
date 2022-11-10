@@ -22,7 +22,7 @@ export class SystemService implements ISystemService {
   }
 
   redis() {
-    if(env.redis.host){
+    if(env.get().redis.host){
       return this.systemRepository.redis();
     }
     return null;

@@ -4,9 +4,10 @@ import { ISocketInterface } from "@type/interface";
 import { ContactSocketConsume } from "./consumers/contact";
 import realIp from "./middlewares/realIpMiddleware";
 import { Container } from "@type/core";
+import { Env } from "@type/infrastructure";
 
 type Config = {
-    env: typeof import("@util/env").env;
+    env: Env;
     coreContainer: Container;
     io?: Server
 };

@@ -17,7 +17,7 @@ const i18n = new I18n({
     directory: path.join(__dirname, "locales"),
     directoryPermissions: "755",
     register: global,
-    autoReload: env.enviorement !== "test",
+    autoReload: env.get().enviorement !== "test",
     extension: ".json",
     queryParameter: "lang",
     header: "accept-language",

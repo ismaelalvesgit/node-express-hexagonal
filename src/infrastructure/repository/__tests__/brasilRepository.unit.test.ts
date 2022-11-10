@@ -13,7 +13,7 @@ describe("Brasil Repository", () => {
   describe("#constructor", () => {
     it("constructs with all properties", () => {
       const u = new BrasilRepository({
-        config: env,
+        config: env.get(),
         httpAdapter: HttpAdapter,
       });
 

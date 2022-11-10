@@ -8,8 +8,8 @@ export const {
   Redact,
   RequestLogger
 } = init({
-  PROJECT_NAME: env.serviceName,
-  LOG_LEVEL: env.enviorement === "test" ? "fatal" : "debug",
+  PROJECT_NAME: env.get().serviceName,
+  LOG_LEVEL: env.get().enviorement === "test" ? "fatal" : "debug",
   OMIT_ROUTES: [
     "/v1/system/metrics"
   ]

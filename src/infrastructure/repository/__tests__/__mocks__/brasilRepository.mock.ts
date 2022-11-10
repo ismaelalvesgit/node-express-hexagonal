@@ -22,7 +22,7 @@ export const cepMock = {
 
 
 export const config = {
-  ...env,
+  ...env.get(),
   brasilApi: chance.url(),
 };
 

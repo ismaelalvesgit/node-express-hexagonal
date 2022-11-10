@@ -5,11 +5,11 @@ export default {
     local:{
         client: "mysql2",
         connection: {
-            host: env.db.host,
-            port: env.db.port,
-            user: env.db.user,
-            password: env.db.password,
-            database: env.db.database,
+            host: env.get().db.host,
+            port: env.get().db.port,
+            user: env.get().db.user,
+            password: env.get().db.password,
+            database: env.get().db.database,
             supportBigNumbers: true,
             bigNumberStrings: true,
             multipleStatements: true,
@@ -17,7 +17,7 @@ export default {
         },
         pool:{
             afterCreate: function(connection, callback) {
-                connection.query(`SET time_zone = "${env.timezone}";`, function(err) {
+                connection.query(`SET time_zone = "${env.get().timezone}";`, function(err) {
                     if (err) {
                         Logger.warn(err, 'failed to initialize mysql database connection');
                     } else {
@@ -26,8 +26,8 @@ export default {
                     callback(err, connection);
                 });
             },
-            min: env.db.pool.min,
-            max: env.db.pool.max
+            min: env.get().db.pool.min,
+            max: env.get().db.pool.max
         },
         migrations: {
             tableName: "migrations",
@@ -37,13 +37,13 @@ export default {
             tableName: "seeds",
             directory: `${__dirname}/db/seeds`
         },
-        debug: env.db.debug
+        debug: env.get().db.debug
     },
     test:{
         client: "sqlite3",
         connection: ":memory:",
         useNullAsDefault: true,
-        pool: env.db.pool,
+        pool: env.get().db.pool,
         migrations: {
             tableName: "migrations",
             directory: `${__dirname}/db/migrations`
