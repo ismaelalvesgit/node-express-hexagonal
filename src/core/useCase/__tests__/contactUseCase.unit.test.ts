@@ -41,6 +41,16 @@ describe("Contact Use Case", () => {
     });
   });
 
+  describe("#asyncCreate", ()=>{
+    it("Must be successful", async () => {
+      const uc = new ContactUseCase(userCaseMock);
+      await expect(uc.asyncCreate({
+        name: new Date().toISOString(),
+        phone:  new Date().getTime().toString()
+      } as Contact)).resolves.not.toThrow();
+    });
+  });
+  
   describe("#create", ()=>{
     it("Must be successful", async () => {
       const uc = new ContactUseCase(userCaseMock);

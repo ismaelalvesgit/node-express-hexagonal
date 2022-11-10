@@ -39,6 +39,16 @@ export class ContactUseCase implements IContactUseCase {
     return this.contactService.find();
   }
 
+  public async asyncCreate(contact: Contact): Promise<void> {
+    this.validateProperties({
+      params: contact,
+      schema: createContactSchema,
+      errorMsg: "Invalid properties to create contact",
+    });
+
+    await this.contactService.asyncCreate(contact);
+  }
+
   public async create(contact: Contact): Promise<void> {
     this.validateProperties({
       params: contact,

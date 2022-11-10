@@ -35,7 +35,7 @@ const _getErrorConfig = error => errorsConfigs.find((errorConfig) => {
   if (error instanceof errorConfig.class && error.i18n === errorConfig.type) {
     return errorConfig;
   }
-  return false
+  return false;
 });
 
 const _loadErrorMessage = (req: HttpRequest, err: any) =>{

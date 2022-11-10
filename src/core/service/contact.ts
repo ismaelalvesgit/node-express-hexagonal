@@ -12,6 +12,10 @@ export class ContactService implements IContactService {
     return this.contactRepository.find();
   }
 
+  public async asyncCreate(contact: Contact): Promise<void> {
+    return this.contactRepository.asyncCreate(contact);
+  }
+  
   public async create(contact: Contact): Promise<void> {
     return this.contactRepository.create(contact);
   }

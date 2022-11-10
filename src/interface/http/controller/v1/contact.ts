@@ -28,6 +28,12 @@ export class ContactController implements IHttpRoute {
   }
 
   register(r: HttpRouter) {
+    r.route("/contact/amqp")
+      .post(
+        this._validator(createContactSchema),
+        this._catchAsync(this.asyncCreate.bind(this)),
+      );
+
     r.route("/contact")
       .get(
         cacheHandler({ctx: this.ctx, path: "contact" }),
@@ -61,6 +67,12 @@ export class ContactController implements IHttpRoute {
   async find(req: HttpRequest, res: HttpResponse) {
     const data = await this.contactUseCase.find();
     res.status(httpStatus.OK).json(data);
+  }
+
+  async asyncCreate(req: HttpRequest, res: HttpResponse) {
+    const body = req.body;
+    await this.contactUseCase.asyncCreate(body);
+    res.sendStatus(httpStatus.CREATED);
   }
 
   async create(req: HttpRequest, res: HttpResponse) {

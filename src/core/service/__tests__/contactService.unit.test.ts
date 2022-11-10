@@ -40,7 +40,17 @@ describe("Contact Service", () => {
       expect(result.name).toEqual(createContactMock.name);
     });
   });
- 
+  
+  describe("#asyncCreate", () => {
+    it("should call create repository with correct values", async () => {
+      const svc = new ContactService(serviceMock);
+      await expect(svc.asyncCreate({
+        name: new Date().toISOString(),
+        phone:  new Date().getTime().toString()
+      } as Contact)).resolves.not.toThrow();
+    });
+  });
+  
   describe("#create", () => {
     it("should call create repository with correct values", async () => {
       const svc = new ContactService(serviceMock);

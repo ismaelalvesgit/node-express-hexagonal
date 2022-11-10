@@ -9,12 +9,14 @@ import { HttpAdapter } from "@adapter/http";
 import { SystemRepository } from "@repository/system";
 import { RedisAdapter } from "@adapter/redis";
 import { ContainerConfig } from "@type/core";
+import { MessageBusAdapter } from "@adapter/messageBus";
 
 export function createContainer(config: Env, io?: Server): ContainerConfig {
   return {
     contactRepository: new ContactRepository({
       mysqlAdapter: new MysqlAdapter(),
-      socket: io
+      socket: io,
+      messageBusAdapter: MessageBusAdapter,
     }),
     brasilRepository: new BrasilRepository({
       config,
