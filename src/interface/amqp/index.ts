@@ -1,25 +1,19 @@
-import { Container } from "@type/core";
 import { getChannel } from "@util/amqplib";
 import { Logger } from "@util/logger";
 import {
   IAmqpConsumer,
   AmqpChannel,
   IAmqpInterface,
+  IConfig,
 } from "@type/interface";
 import { ContactConsumer } from "./consumer/contact";
 import { onConsume } from "./middlewares/onConsume";
-import { Env } from "@type/infrastructure";
-
-type Config = {
-  env: Env;
-  coreContainer: Container;
-};
 
 export class AmqpInterface implements IAmqpInterface {
   private channel: AmqpChannel | null;
-  private coreContainer: Config["coreContainer"];
+  private coreContainer: IConfig["coreContainer"];
 
-  constructor(config: Config) {
+  constructor(config: IConfig) {
     this.coreContainer = config.coreContainer;
     this.channel = null;
   }

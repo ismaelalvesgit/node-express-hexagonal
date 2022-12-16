@@ -5,15 +5,24 @@ import {
   NextFunction,
 } from "express";
 import { Channel, ConsumeMessage } from "amqplib";
-
+import Validator from '@middleware/validator';
+import CatchAsync from '@middleware/catchAsync';
 import { Container } from "./core";
 import { Server, Socket } from "socket.io";
+import { FuncHandler } from '@amqp/middlewares/handlers'
 
 declare module 'express-serve-static-core' {
   interface Request {
     requestId: string
   }
 }
+
+export interface IConfig {
+  env: Env;
+  coreContainer: Container;
+  io?: Server
+}
+
 /* HTTP Interface */
 export type HttpRouter = Router;
 export type HttpRequest = Request;
@@ -30,8 +39,8 @@ export interface IHttpInterface {
 
 export type HttpControllerConfig = {
   coreContainer: Container;
-  validator: typeof import("../interface/http/middleware/validator").validator;
-  catchAsync: typeof import("../interface/http/middleware/catchAsync").default;
+  validator: Validator;
+  catchAsync: CatchAsync;
 };
 
 /* AMQP Interface */
@@ -43,7 +52,7 @@ export type AmqpMessageHandler = (msg: AmqpMessage | null) => void | Promise<voi
 export type AmqpOnConsumeFunction = (
   channel: AmqpChannel,
   finisher: FinisherFunction,
-  ...msgHandlers: import("../interface/amqp/middlewares/handlers").FuncHandler[]
+  ...msgHandlers: FuncHandler[]
 ) => (message: AmqpMessage | null) => Promise<void>;
 
 export type FinisherFunction = (channel: AmqpChannel, message: AmqpMessage, error?: unknown) => unknown;
@@ -69,11 +78,13 @@ export type AmqpConsumerConfig = {
   _onConsume: AmqpOnConsumeFunction;
 };
 
+/* SOCKET Interface */
 export type SocketConsumerConfig = {
   coreContainer: Container;
   socket: Socket
 };
 
+/* JOB Interface */
 export interface ICronInterface {
   start(): void;
 }
@@ -84,4 +95,10 @@ export type CronJobConfig = {
 
 export interface IJob {
   run(): void | Promise<void> | Promise<string>;
+}
+
+export interface ValidationParams {
+  schema: AnySchema;
+  params: object;
+  errorMsg: string;
 }

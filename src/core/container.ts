@@ -1,4 +1,4 @@
-import { ContainerConfig, Container } from "../types/core";
+import { ContainerConfig, Container } from "@type/core";
 import { ContactUseCase } from "./useCase/contact";
 import { ContactService } from "./service/contact";
 import { BrasilService } from "./service/brasil";

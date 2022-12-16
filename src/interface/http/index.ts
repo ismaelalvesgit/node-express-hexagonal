@@ -9,8 +9,7 @@ import http from "http";
 import hidePoweredBy from "hide-powered-by";
 import { Server } from "socket.io";
 import { errorHandler } from "./middleware/errorHandler";
-import { Container } from "@type/core";
-import { IHttpInterface } from "@type/interface";
+import { IConfig, IHttpInterface } from "@type/interface";
 import { ExpressLogger, Logger } from "@util/logger";
 import requestIdHandler from "@middleware/requestId";
 import limteRate from "@middleware/limteRate";
@@ -19,23 +18,16 @@ import responseCountersHandler from "@middleware/metrics/responseCounters";
 import changeLocaleHandler from "@middleware/changeLocale";
 import i18n from "@middleware/i18n";
 import { HttpRouter } from "@controller/routes";
-import { ServiceUnavailable } from "@util/error";
-import { Env } from "@type/infrastructure";
 const swaggerDocument = YAML.load("./doc/swagger.yml");
 
-type Config = {
-  env: Env;
-  coreContainer: Container;
-  io: Server
-};
-
 export class HttpInterface implements IHttpInterface {
-  private app?: express.Application;
-  private io: Server;
-  private coreContainer: Config["coreContainer"];
-  private env: Config["env"];
+  private io?: Server;
+  private app: express.Application;
+  private coreContainer: IConfig["coreContainer"];
+  private env: IConfig["env"];
+  private httpServer: http.Server;
 
-  constructor(config: Config) {
+  constructor(config: IConfig) {
     Logger.debug({
       coreContainer: config.coreContainer !== undefined,
       env: config.env !== undefined,
@@ -45,6 +37,8 @@ export class HttpInterface implements IHttpInterface {
     this.coreContainer = config.coreContainer;
     this.env = config.env;
     this.io = config.io;
+    this.app = express();
+    this.httpServer = http.createServer(this.app); 
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -57,8 +51,6 @@ export class HttpInterface implements IHttpInterface {
   }
 
   initApp() {
-    this.app = express();
-
     this.app.use(
       helmet({
         contentSecurityPolicy: this.env.isProd,
@@ -92,8 +84,6 @@ export class HttpInterface implements IHttpInterface {
     this.app.use(ExpressLogger.onError.bind(ExpressLogger));
 
     this.setupRoutes();
-
-    this.setupNotFound();
     
     this.app.use(errorHandler);
   }
@@ -104,44 +94,42 @@ export class HttpInterface implements IHttpInterface {
       coreContainer: this.coreContainer
     });
     router.v1();
-    
-    this.app?.get("/", (req, res)=>{
+    this.app.get("/", (req, res)=>{
       res.render("index", {url: this.env.server.url});
     });
+    this.setupNotFound();
+
     this._debug({}, "setupRoutes end");
   }
 
   setupNotFound() {
-    this.app?.all(
+    this.app.all(
       "*",
-      (req: express.Request, res: express.Response, next ) => {
-        return next(new ServiceUnavailable("router"));
+      (req: express.Request, res: express.Response ) => {
+        res.status(501).json({message: req.__("ServiceUnavailable.router")});
       },
     );
   }
 
-
   setupDoc(){
-    this.app?.use("/v1/api-doc", swagger.serve, swagger.setup(swaggerDocument));
+    this.app.use("/v1/api-doc", swagger.serve, swagger.setup(swaggerDocument));
   }
 
   setupAssets(){  
-    this.app?.use("/static", express.static("./src/public"));
+    this.app.use("/static", express.static("./src/public"));
   }
 
   setupEngineView(){
-    this.app?.set("view engine", "ejs");
-    this.app?.set("views", "./src/views");
+    this.app.set("view engine", "ejs");
+    this.app.set("views", "./src/views");
   }
 
   serve() {
     this.initApp();
-
-    const httpServer = http.createServer(this.app); 
     
-    this.io.listen(httpServer);
+    this.io?.listen(this.httpServer);
 
-    httpServer.listen(this.env.server.port);
+    this.httpServer.listen(this.env.server.port);
 
     this._debug({}, "http interface initialized");
   }

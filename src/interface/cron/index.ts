@@ -1,22 +1,16 @@
-import { Container } from "@type/core";
-import { ICronInterface } from "@type/interface";
+import { IConfig, ICronInterface } from "@type/interface";
 import { Logger } from "@util/logger";
 import { CronJob } from "cron";
 import { v4 } from "uuid";
 import { getAgent, setApmTransactionResult } from "@util/apm";
 import commands from "@command/index";
-import { Env } from "@type/infrastructure";
 
-type Config = {
-    env: Env;
-    coreContainer: Container;
-};
   
 export class CronInterface implements ICronInterface {
-    private env: Config["env"];
-    private coreContainer: Config["coreContainer"];
+    private env: IConfig["env"];
+    private coreContainer: IConfig["coreContainer"];
 
-    constructor(config: Config) {
+    constructor(config: IConfig) {
         this.env = config.env;
         this.coreContainer = config.coreContainer;
     }   
