@@ -1,7 +1,7 @@
 import { cepMock } from "@repository/__tests__/__mocks__/brasilRepository.mock";
 import { UseCaseContext } from "@type/core";
 import { BrasilUseCase } from "../brasil";
-import { userCaseMock } from "../mock/main.mock";
+import { userCaseMock } from "@test/container.mock";
 
 describe("Brasil Use Case", () => {
   describe("#constructor", () => {

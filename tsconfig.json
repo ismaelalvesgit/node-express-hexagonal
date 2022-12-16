@@ -24,6 +24,7 @@
     "outDir": "dist",
     "baseUrl": "./src",
     "paths": {
+      "@test/*": ["test/*"],
       "@core/*": ["core/*"],
       "@controller/*": ["interface/http/controller/*"],
       "@middleware/*": ["interface/http/middleware/*"],

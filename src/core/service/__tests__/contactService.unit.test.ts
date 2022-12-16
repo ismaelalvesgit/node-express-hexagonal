@@ -1,6 +1,6 @@
 import { ServiceContext } from "@type/core";
 import { ContactService } from "../contact";
-import { serviceMock, createContactMock } from "../mock/main.mock";
+import { serviceMock, createContactMock } from "@test/container.mock";
 import { Contact } from "@type/contact";
 
 describe("Contact Service", () => {

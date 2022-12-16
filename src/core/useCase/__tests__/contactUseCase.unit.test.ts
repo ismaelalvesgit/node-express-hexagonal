@@ -1,7 +1,6 @@
-import { createContactMock } from "@core/service/mock/main.mock";
 import { UseCaseContext } from "@type/core";
 import { ContactUseCase } from "../contact";
-import { userCaseMock } from "../mock/main.mock";
+import { userCaseMock, createContactMock } from "@test/container.mock";
 import { Contact } from "@type/contact";
 
 describe("Contact Use Case", () => {

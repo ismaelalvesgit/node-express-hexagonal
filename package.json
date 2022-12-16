@@ -11,7 +11,7 @@
     "build:views": "copyfiles -u 1 src/views/**/* dist/src",
     "build:i18n": "copyfiles -u 1 src/interface/http/middleware/i18n/locales/**/* dist/src",
     "build": "concurrently \"npm:build:tsc\" \"npm:build:doc\" \"npm:build:assets\" \"npm:build:views\" \"npm:build:i18n\"",
-    "test": "cross-env NODE_ENV=test jest --env=node --logHeapUsage",
+    "test": "cross-env NODE_ENV=test jest",
     "test:unit": "cross-env NODE_ENV=test jest \\.unit\\.test\\.ts --silent",
     "test:integration": "cross-env NODE_ENV=test jest \\.integration\\.test\\.ts",
     "test:coverage": "cross-env NODE_ENV=test jest \\.test\\.ts --coverage",

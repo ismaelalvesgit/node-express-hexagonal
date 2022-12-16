@@ -2,7 +2,7 @@
 import { ServiceContext } from "@type/core";
 import { cepMock } from "@repository/__tests__/__mocks__/brasilRepository.mock";
 import { BrasilService } from "../brasil";
-import { serviceMock } from "../mock/main.mock";
+import { serviceMock } from "@test/container.mock";
 
 
 describe("Contact Service", () => {
