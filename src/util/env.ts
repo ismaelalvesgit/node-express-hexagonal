@@ -62,7 +62,8 @@ class ConfigEnv {
             vault: {
                 host: process.env.VAULT_URL,
                 roleId: process.env.VAULT_ROLE_ID,
-                secretId: process.env.VAULT_SECRET_ID
+                secretId: process.env.VAULT_SECRET_ID,
+                engine: process.env.VAULT_ENGINE_ID || 'kv'
             },
         };
     }

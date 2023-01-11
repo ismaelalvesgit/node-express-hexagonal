@@ -114,5 +114,6 @@ export type Env = {
     host?: string
     roleId?: string
     secretId?: string
+    engine?: string
   }
 };

@@ -9,7 +9,7 @@ const vault = Vault({
 });
 
 setImmediate(async () => {
-  if (R.keys(R.reject(R.isNil, env.get().vault)).length > 2) {
+  if (R.keys(R.reject(R.isNil, env.get().vault)).length > 3) {
     Logger.info("Starting get secrets on vault");
     try {
       const result = await vault.approleLogin({
@@ -18,7 +18,7 @@ setImmediate(async () => {
       });
 
       vault.token = result.auth.client_token;
-      const { data: { data } } = await vault.read(`secret/data/${env.get().serviceName}`);
+      const { data: { data } } = await vault.read(`${env.get().vault.engine}/data/${env.get().serviceName}`);
 
       Logger.info("Secrets retrieve on vault", Object.keys(data));
       Object.keys(data).forEach((key) => {
